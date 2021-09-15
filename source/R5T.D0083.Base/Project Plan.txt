@@ -1,0 +1,3 @@
+R5T.D0083.Base - Base service definitions for IVisualStudioProjectFileReferencesProvider service..
+
+GOALS:

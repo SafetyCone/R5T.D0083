@@ -1,0 +1,3 @@
+R5T.D0083.A001 - IVisualStudioProjectFileReferencesProvider service.
+
+GOALS:

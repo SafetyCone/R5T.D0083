@@ -1,0 +1,3 @@
+R5T.D0083.I001 - Default implementation for IVisualStudioProjectFileReferencesProvider service..
+
+GOALS:

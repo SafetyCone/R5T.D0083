@@ -1,0 +1,3 @@
+R5T.D0083.Construction - Construction project for IVisualStudioProjectFileReferencesProvider service..
+
+GOALS:
