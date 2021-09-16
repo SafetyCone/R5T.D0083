@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using R5T.Dacia;
 using R5T.T0027.T008;
 
+using R5T.D0083.I001;
+
 
 namespace R5T.D0083.Construction
 {
@@ -37,15 +39,17 @@ namespace R5T.D0083.Construction
                 configurationAction,
                 startupServicesProvider,
                 providedServices);
-        
+
             // Services.
-        
+            var visualStudioProjectFileReferencesProviderAction = services.AddVisualStudioProjectFileReferencesProviderAction(
+                providedServices.StringlyTypedPathOperatorAction);
+
             // Operations.
-        
+
             // Run.
-            // services
-            //     .Run()
-            //     ;
+            services
+                .Run(visualStudioProjectFileReferencesProviderAction)
+                ;
         }
     }
 }

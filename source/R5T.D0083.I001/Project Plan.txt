@@ -1,3 +1,5 @@
-R5T.D0083.I001 - Default implementation for IVisualStudioProjectFileReferencesProvider service..
+R5T.D0083.I001 - An implementation for IVisualStudioProjectFileReferencesProvider service based on directly reading the data of a project file as XML data.
+
+This implementation has no dependency on the dotnet executable, instead reading the Visual Studio project file directly as XML.
 
 GOALS:

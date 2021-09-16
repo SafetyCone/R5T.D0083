@@ -1,0 +1,3 @@
+R5T.D0083.X001 - IVisualStudioProjectFileReferencesProvider basic extensions.
+
+GOALS:
