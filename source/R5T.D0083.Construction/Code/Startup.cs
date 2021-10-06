@@ -6,6 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using R5T.Dacia;
+
+using R5T.D0077.Configuration;
+using R5T.D0078.A001;
 using R5T.T0027.T008;
 
 using R5T.D0083.I001;
@@ -25,7 +28,7 @@ namespace R5T.D0083.Construction
             IConfigurationBuilder configurationBuilder,
             IServiceProvider startupServicesProvider)
         {
-            
+            await configurationBuilder.AddDotnetConfigurationSecretsFilePath(startupServicesProvider);
         }
         
         protected override async Task ConfigureServicesWithProvidedServices(
@@ -41,6 +44,11 @@ namespace R5T.D0083.Construction
                 providedServices);
 
             // Services.
+            var visualStudioSolutionFileOperatorServices = services.AddVisualStudioSolutionFileOperatorServices(
+                configurationAction,
+                providedServices.FileNameOperatorAction,
+                providedServices.StringlyTypedPathOperatorAction);
+
             var visualStudioProjectFileReferencesProviderAction = services.AddVisualStudioProjectFileReferencesProviderAction(
                 providedServices.StringlyTypedPathOperatorAction);
 
@@ -48,7 +56,9 @@ namespace R5T.D0083.Construction
 
             // Run.
             services
+                // Services.
                 .Run(visualStudioProjectFileReferencesProviderAction)
+                .Run(visualStudioSolutionFileOperatorServices.VisualStudioSolutionFileOperatorAction)
                 ;
         }
     }

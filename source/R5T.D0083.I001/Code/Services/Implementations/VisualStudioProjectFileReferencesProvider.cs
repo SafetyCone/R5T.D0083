@@ -2,10 +2,12 @@ using System;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using System.Threading;
 using System.Threading.Tasks;
 
 using R5T.Dacia;
 using R5T.Lombardy;
+using R5T.Magyar.IO;
 
 
 namespace R5T.D0083.I001
@@ -26,14 +28,19 @@ namespace R5T.D0083.I001
             this.StringlyTypedPathOperator = stringlyTypedPathOperator;
         }
 
-        public Task<string[]> GetProjectReferencesForProject(string projectFilePath)
+        public async Task<string[]> GetProjectReferencesForProject(string projectFilePath)
         {
             var projectReferenceXDocumentRelativeXPath = "//Project/ItemGroup/ProjectReference";
             var projectReferenceIncludeAttributeName = "Include";
 
             var projectDirectoryPath = this.StringlyTypedPathOperator.GetDirectoryPathForFilePath(projectFilePath);
 
-            var projectXDocument = XDocument.Load(projectFilePath);
+            using var fileStream = FileStreamHelper.NewRead(projectFilePath);
+
+            var projectXDocument = await XDocument.LoadAsync(
+                fileStream,
+                LoadOptions.None,
+                CancellationToken.None);
 
             var projectReferenceXElements = projectXDocument.XPathSelectElements(projectReferenceXDocumentRelativeXPath);
 
@@ -47,7 +54,7 @@ namespace R5T.D0083.I001
                     filePath))
                 .ToArray();
 
-            return Task.FromResult(output);
+            return output;
         }
     }
 }

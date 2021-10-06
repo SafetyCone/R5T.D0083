@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "R5T.Magyar", "..\..\R5T.Mag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "R5T.T0039.T002", "..\..\R5T.T0039\source\R5T.T0039.T002\R5T.T0039.T002.csproj", "{B26B861D-69FA-4C50-B820-949E5B43F564}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "R5T.D0083.X001", "R5T.D0083.X001\R5T.D0083.X001.csproj", "{92C516D8-EE08-412D-B0B0-B161D81A9880}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -127,6 +129,18 @@ Global
 		{B26B861D-69FA-4C50-B820-949E5B43F564}.Release|x64.Build.0 = Release|Any CPU
 		{B26B861D-69FA-4C50-B820-949E5B43F564}.Release|x86.ActiveCfg = Release|Any CPU
 		{B26B861D-69FA-4C50-B820-949E5B43F564}.Release|x86.Build.0 = Release|Any CPU
+		{92C516D8-EE08-412D-B0B0-B161D81A9880}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92C516D8-EE08-412D-B0B0-B161D81A9880}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92C516D8-EE08-412D-B0B0-B161D81A9880}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{92C516D8-EE08-412D-B0B0-B161D81A9880}.Debug|x64.Build.0 = Debug|Any CPU
+		{92C516D8-EE08-412D-B0B0-B161D81A9880}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{92C516D8-EE08-412D-B0B0-B161D81A9880}.Debug|x86.Build.0 = Debug|Any CPU
+		{92C516D8-EE08-412D-B0B0-B161D81A9880}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92C516D8-EE08-412D-B0B0-B161D81A9880}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92C516D8-EE08-412D-B0B0-B161D81A9880}.Release|x64.ActiveCfg = Release|Any CPU
+		{92C516D8-EE08-412D-B0B0-B161D81A9880}.Release|x64.Build.0 = Release|Any CPU
+		{92C516D8-EE08-412D-B0B0-B161D81A9880}.Release|x86.ActiveCfg = Release|Any CPU
+		{92C516D8-EE08-412D-B0B0-B161D81A9880}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

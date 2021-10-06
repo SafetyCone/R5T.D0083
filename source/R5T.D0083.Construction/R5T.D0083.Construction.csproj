@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\R5T.D0078\source\R5T.D0078.A001\R5T.D0078.A001.csproj" />
     <ProjectReference Include="..\..\..\R5T.Plymouth\source\R5T.Plymouth.ProgramAsAService\R5T.Plymouth.ProgramAsAService.csproj" />
     <ProjectReference Include="..\..\..\R5T.T0027\source\R5T.T0027.T009\R5T.T0027.T009.csproj" />
     <ProjectReference Include="..\R5T.D0083.I001\R5T.D0083.I001.csproj" />
