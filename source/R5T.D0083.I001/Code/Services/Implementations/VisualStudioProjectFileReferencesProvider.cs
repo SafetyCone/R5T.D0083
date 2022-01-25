@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -7,7 +8,6 @@ using System.Threading.Tasks;
 
 using R5T.Dacia;
 using R5T.Lombardy;
-using R5T.Magyar.IO;
 
 
 namespace R5T.D0083.I001
