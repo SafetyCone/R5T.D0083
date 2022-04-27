@@ -49,7 +49,7 @@ namespace R5T.D0083.Construction
                 providedServices.FileNameOperatorAction,
                 providedServices.StringlyTypedPathOperatorAction);
 
-            var visualStudioProjectFileReferencesProviderAction = services.AddVisualStudioProjectFileReferencesProviderAction(
+            var visualStudioProjectFileReferencesProviderAction = services.AddVisualStudioProjectFileReferencesProviderAction_Old(
                 providedServices.StringlyTypedPathOperatorAction);
 
             // Operations.

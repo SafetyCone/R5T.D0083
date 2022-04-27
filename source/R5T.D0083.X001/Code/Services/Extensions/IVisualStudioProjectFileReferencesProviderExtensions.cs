@@ -86,19 +86,6 @@ namespace System
         }
 
         /// <summary>
-        /// Here only as related functionatliy. Does not depend on the service.
-        /// </summary>
-        public static string[] GetRequiredButUnavailableProjects(this IVisualStudioProjectFileReferencesProvider _,
-            IEnumerable<string> requiredProjectFilePaths,
-            IEnumerable<string> availableProjectFilePaths)
-        {
-            var output = requiredProjectFilePaths.Except(availableProjectFilePaths)
-                .ToArray();
-
-            return output;
-        }
-
-        /// <summary>
         /// Provides a list of direct project dependencies of a project that are dependencies one of the project's other project dependencies (and thus are direct dependencies that can be satified as indirect dependencies).
         /// </summary>
         public static async Task<string[]> GetExtraneousProjectDependencies(this IVisualStudioProjectFileReferencesProvider visualStudioProjectFileReferencesProvider,
@@ -286,6 +273,106 @@ namespace System
                 xTuple => xTuple.ExtraneousProjectDependencies);
 
             return output;
+        }
+
+        /// <summary>
+        /// Here only as related functionatliy. Does not depend on the service.
+        /// </summary>
+        public static string[] GetRequiredButUnavailableProjects(this IVisualStudioProjectFileReferencesProvider _,
+            IEnumerable<string> requiredProjectFilePaths,
+            IEnumerable<string> availableProjectFilePaths)
+        {
+            var output = requiredProjectFilePaths.Except(availableProjectFilePaths)
+                .ToArray();
+
+            return output;
+        }
+
+        public static async Task<bool> HasDirectProjectReference(this IVisualStudioProjectFileReferencesProvider visualStudioProjectFileReferencesProvider,
+            string projectFilePath,
+            string referenceProjectFilePath)
+        {
+            var hasProjectReferenceByReferenceProjectFilePath = await visualStudioProjectFileReferencesProvider.HasDirectProjectReferences(
+                projectFilePath,
+                EnumerableHelper.From(referenceProjectFilePath));
+
+            var output = hasProjectReferenceByReferenceProjectFilePath[referenceProjectFilePath];
+            return output;
+        }
+
+        public static async Task<Dictionary<string, bool>> HasDirectProjectReferences(this IVisualStudioProjectFileReferencesProvider visualStudioProjectFileReferencesProvider,
+            string projectFilePath,
+            IEnumerable<string> referenceProjectFilePaths)
+        {
+            var allProjectReferenceOfProject = await visualStudioProjectFileReferencesProvider.GetProjectReferencesForProject(projectFilePath);
+
+            var allProjectReferenceOfProjectHash = allProjectReferenceOfProject.ToHashSet();
+
+            // TODO: use a paths operation to compare in a directory separator-insensitive way?
+            var output = referenceProjectFilePaths
+                .Select(x => (ReferenceProjectFilePath: x, HasReference: allProjectReferenceOfProjectHash.Contains(x)))
+                .ToDictionary(
+                    x => x.ReferenceProjectFilePath,
+                    x => x.HasReference);
+
+            return output;
+        }
+
+        /// <summary>
+        /// Determines whether the project has the reference project among its recursive project references.
+        /// </summary>
+        public static async Task<bool> HasRecursiveProjectReference(this IVisualStudioProjectFileReferencesProvider visualStudioProjectFileReferencesProvider,
+            string projectFilePath,
+            string referenceProjectFilePath)
+        {
+            var hasProjectReferenceByReferenceProjectFilePath = await visualStudioProjectFileReferencesProvider.HasRecursiveProjectReferences(
+                projectFilePath,
+                EnumerableHelper.From(referenceProjectFilePath));
+
+            var output = hasProjectReferenceByReferenceProjectFilePath[referenceProjectFilePath];
+            return output;
+        }
+
+        public static async Task<Dictionary<string, bool>> HasRecursiveProjectReferences(this IVisualStudioProjectFileReferencesProvider visualStudioProjectFileReferencesProvider,
+            string projectFilePath,
+            IEnumerable<string> referenceProjectFilePaths)
+        {
+            var allRecursiveProjectReferenceOfProject = await visualStudioProjectFileReferencesProvider.GetAllRecursiveProjectReferenceDependenciesExclusive(projectFilePath);
+
+            var allRecursiveProjectReferenceOfProjectHash = allRecursiveProjectReferenceOfProject.ToHashSet();
+
+            // TODO: use a paths operation to compare in a directory separator-insensitive way?
+            var output = referenceProjectFilePaths
+                .Select(x => (ReferenceProjectFilePath: x, HasReference: allRecursiveProjectReferenceOfProjectHash.Contains(x)))
+                .ToDictionary(
+                    x => x.ReferenceProjectFilePath,
+                    x => x.HasReference);
+
+            return output;
+        }
+
+        /// <summary>
+        /// Chooses <see cref="HasDirectProjectReference(IVisualStudioProjectFileReferencesProvider, string, string)"/> as the default.
+        /// </summary>
+        public static Task<bool> HasProjectReference(this IVisualStudioProjectFileReferencesProvider visualStudioProjectFileReferencesProvider,
+            string projectFilePath,
+            string referenceProjectFilePath)
+        {
+            return visualStudioProjectFileReferencesProvider.HasDirectProjectReference(
+                projectFilePath,
+                referenceProjectFilePath);
+        }
+
+        /// <summary>
+        /// Chooses <see cref="HasDirectProjectReferences(IVisualStudioProjectFileReferencesProvider, string, IEnumerable{string})"/> as the default.
+        /// </summary>
+        public static Task<Dictionary<string, bool>> HasProjectReferences(this IVisualStudioProjectFileReferencesProvider visualStudioProjectFileReferencesProvider,
+            string projectFilePath,
+            IEnumerable<string> referenceProjectFilePaths)
+        {
+            return visualStudioProjectFileReferencesProvider.HasDirectProjectReferences(
+                projectFilePath,
+                referenceProjectFilePaths);
         }
     }
 }

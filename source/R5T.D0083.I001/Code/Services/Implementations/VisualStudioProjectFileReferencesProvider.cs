@@ -18,7 +18,7 @@ namespace R5T.D0083.I001
     /// This is much faster than running the dotnet tool and processing its output.
     /// </summary>
     [ServiceImplementationMarker]
-    public class VisualStudioProjectFileReferencesProvider : IVisualStudioProjectFileReferencesProvider
+    public class VisualStudioProjectFileReferencesProvider : IVisualStudioProjectFileReferencesProvider, IServiceImplementation
     {
         private IStringlyTypedPathOperator StringlyTypedPathOperator { get; }
 

@@ -8,10 +8,10 @@ namespace System
     public static class IServiceAggregationIncrementExtensions
     {
         public static T FillFrom<T>(this T aggregation,
-            IServiceAggregationIncrement other)
+            IServiceAggregationIncrement _)
             where T : IServiceAggregationIncrement
         {
-        
+            return aggregation;
         }
     }
 }

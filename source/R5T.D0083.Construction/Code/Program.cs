@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -49,10 +50,12 @@ namespace R5T.D0083.Construction
             //return this.RunOperation();
         }
         
-        private async Task RunOperation()
-        {
+#pragma warning disable IDE0051 // Remove unused private members
+
+        //private async Task RunOperation()
+        //{
         
-        }
+        //}
         
         private async Task RunMethod()
         {
@@ -117,7 +120,11 @@ namespace R5T.D0083.Construction
 
             var visualStudioProjectFileReferencesProvider = this.ServiceProvider.GetRequiredService<IVisualStudioProjectFileReferencesProvider>();
 
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
             var projectReferences = await visualStudioProjectFileReferencesProvider.GetProjectReferencesForProject(projectFilePath);
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
         }
+
+#pragma warning restore IDE0051 // Remove unused private members
     }
 }
