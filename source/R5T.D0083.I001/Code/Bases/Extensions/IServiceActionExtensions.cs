@@ -11,7 +11,7 @@ namespace R5T.D0083.I001
     public static class IServiceActionExtensions
     {
         /// <summary>
-        /// Adds the <see cref="VisualStudioProjectFileReferencesProvider"/> implementation of <see cref="IVisualStudioProjectFileReferencesProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// Adds the <see cref="VisualStudioProjectFileReferencesProvider"/> implementation of <see cref="IVisualStudioProjectFileReferencesProvider"/> as a <see cref="Microsoft.Extensions.DependencyInjection.ServiceLifetime.Singleton"/>.
         /// </summary>
         public static IServiceAction<IVisualStudioProjectFileReferencesProvider> AddVisualStudioProjectFileReferencesProviderAction(this IServiceAction _,
             IServiceAction<IStringlyTypedPathOperator> stringlyTypedPathOperatorAction)

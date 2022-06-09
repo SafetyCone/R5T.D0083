@@ -52,7 +52,7 @@ namespace System
         /// Returns all project references, and all project references of all project references, recursively, of the specified project file path.
         /// Does not include the initial project file path in the returned values.
         /// </summary>
-        public static async Task<string[]> GetAllRecursiveProjectReferenceDependenciesExclusive(this IVisualStudioProjectFileReferencesProvider visualStudioProjectFileReferencesProvider,
+        public static async Task<string[]> GetAllRecursiveProjectReferenceDependencies_Exclusive(this IVisualStudioProjectFileReferencesProvider visualStudioProjectFileReferencesProvider,
             string projectFilePath)
         {
             var output = await visualStudioProjectFileReferencesProvider.GetAllRecursiveProjectReferenceDependencies(
@@ -66,7 +66,7 @@ namespace System
         /// Returns all project references, and all project references of all project references, recursively, of the specified project file path.
         /// Includes the initial project file path in the returned values.
         /// </summary>
-        public static async Task<string[]> GetAllRecursiveProjectReferenceDependenciesInclusive(this IVisualStudioProjectFileReferencesProvider visualStudioProjectFileReferencesProvider,
+        public static async Task<string[]> GetAllRecursiveProjectReferenceDependencies_Inclusive(this IVisualStudioProjectFileReferencesProvider visualStudioProjectFileReferencesProvider,
             string projectFilePath)
         {
             var output = await visualStudioProjectFileReferencesProvider.GetAllRecursiveProjectReferenceDependencies(
@@ -77,12 +77,12 @@ namespace System
         }
 
         /// <summary>
-        /// Chooses <see cref="GetAllRecursiveProjectReferenceDependenciesExclusive(IVisualStudioProjectFileReferencesProvider, string)"/> as the default.
+        /// Chooses <see cref="GetAllRecursiveProjectReferenceDependencies_Exclusive(IVisualStudioProjectFileReferencesProvider, string)"/> as the default.
         /// </summary>
         public static Task<string[]> GetAllRecursiveProjectReferenceDependencies(this IVisualStudioProjectFileReferencesProvider visualStudioProjectFileReferencesProvider,
            string projectFilePath)
         {
-            return visualStudioProjectFileReferencesProvider.GetAllRecursiveProjectReferenceDependenciesExclusive(projectFilePath);
+            return visualStudioProjectFileReferencesProvider.GetAllRecursiveProjectReferenceDependencies_Exclusive(projectFilePath);
         }
 
         /// <summary>
@@ -232,6 +232,22 @@ namespace System
             return output;
         }
 
+        public static async Task<string[]> GetAllRecursiveProjectReferenceDependencies_Aggregated(this IVisualStudioProjectFileReferencesProvider visualStudioProjectFileReferencesProvider,
+            IEnumerable<string> projectFilePaths,
+            bool includeInitialProject = false)
+        {
+            var tuples = await visualStudioProjectFileReferencesProvider.GetAllRecursiveProjectReferenceDependencies(
+                projectFilePaths,
+                includeInitialProject);
+
+            var output = tuples
+                .SelectMany(xTuple => xTuple.RecursiveProjectReferenceDependencies)
+                .Distinct()
+                .Now();
+
+            return output;
+        }
+
         public static async Task<(string ProjectFilePath, string[] ExtraneousProjectDependencies)[]> GetExtraneousProjectDependencies(this IVisualStudioProjectFileReferencesProvider visualStudioProjectFileReferencesProvider,
             IEnumerable<string> projectFilePaths)
         {
@@ -337,7 +353,7 @@ namespace System
             string projectFilePath,
             IEnumerable<string> referenceProjectFilePaths)
         {
-            var allRecursiveProjectReferenceOfProject = await visualStudioProjectFileReferencesProvider.GetAllRecursiveProjectReferenceDependenciesExclusive(projectFilePath);
+            var allRecursiveProjectReferenceOfProject = await visualStudioProjectFileReferencesProvider.GetAllRecursiveProjectReferenceDependencies_Exclusive(projectFilePath);
 
             var allRecursiveProjectReferenceOfProjectHash = allRecursiveProjectReferenceOfProject.ToHashSet();
 
