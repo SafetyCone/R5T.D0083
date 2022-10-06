@@ -243,7 +243,7 @@ namespace System
             var output = tuples
                 .SelectMany(xTuple => xTuple.RecursiveProjectReferenceDependencies)
                 .Distinct()
-                .Now();
+                .ToArray();
 
             return output;
         }
